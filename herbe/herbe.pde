@@ -9,7 +9,7 @@ void setup(){
   size(800,600);
   grass =new ArrayList<Blade>(10);
   for(int i = 0; i < 400;i++){
-    grass.add(new Blade(new PVector(i*2,600)));
+    grass.add(new Blade(new PVector(i*2,height)));
   }
 }
 
