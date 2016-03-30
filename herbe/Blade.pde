@@ -1,9 +1,10 @@
 class Blade {
   //atributs
-  float d = (int)random(-100,-50);
+  float d = (int)random(-50,-10);
   PVector ancre ;
   int taille = (int)random(2,10);
   color couleur ;
+  int detailLevel = 1;
   //variables
   int i ;
 
@@ -70,6 +71,10 @@ class Blade {
     this.couleur = couleur;
   }
   
+  void updateDetailLevel(int level){
+    this.detailLevel = level;
+  }
+  
   //affiche le brin dans la fenetre grace aux attributs
   // coef est comprit entre -100 et 100
   void display(float coef){
@@ -83,7 +88,7 @@ class Blade {
   void dessineBout(float x, float y,  float dim, int taille,float coef){
 
     i--;
-    strokeWeight(i); 
+    strokeWeight(i/detailLevel); 
     
     pushMatrix();
     translate (x, y);
