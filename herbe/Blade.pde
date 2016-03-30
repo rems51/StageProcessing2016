@@ -1,6 +1,6 @@
 class Blade {
   //atributs
-  float d = (int)random(-200,-50);
+  float d = (int)random(-100,-50);
   PVector ancre ;
   int taille = (int)random(2,10);
   color couleur ;
@@ -71,6 +71,7 @@ class Blade {
   }
   
   //affiche le brin dans la fenetre grace aux attributs
+  // coef est comprit entre -100 et 100
   void display(float coef){
     i = this.taille;
     stroke(this.couleur);
