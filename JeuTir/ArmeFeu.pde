@@ -38,6 +38,8 @@ class ArmeFeu {
   
   ConteneurImpacts impacts = new ConteneurImpacts();
   
+  ConteneurObstacles obstacles;
+  
   ConteneurCibles cibles;
   
   ArmeFeu (int interval,int nbBalle) {
@@ -74,11 +76,16 @@ class ArmeFeu {
       tiract = 0;
       if(tirmode){
         int i = cibles.oneIsTouched(m.position.x,m.position.y);
+        int j = obstacles.oneIsTouched(m.position.x,m.position.y);
         if(i != -1){
           cibles.ajoutImpact(i,m.position.x,m.position.y);
           nbBalleChargeur -= 1;
           firstShoot = false;
-        }else {
+        }else if(j != -1){
+          obstacles.ajoutImpact(j,m.position.x,m.position.y);
+          nbBalleChargeur -= 1;
+          firstShoot = false;
+        }else{
           if(impacts.ajoutImpact(m.position.x,m.position.y,1)){
             nbBalleChargeur -= 1;
             firstShoot = false;
@@ -169,9 +176,6 @@ class ArmeFeu {
     
     //impacts.display();
     
-    cibles.display();
-    
-    m.display();
   }
   
   int getNbBalle(){
@@ -201,12 +205,8 @@ class ArmeFeu {
     cibles = lesCibles;
   }
   
-  void displayMire(){
-    m.display();
-  }
-  
-  void displayCible(int i){
-    cibles.display(i);
+  void setObstacles(ConteneurObstacles lesObstacles){
+    obstacles = lesObstacles;
   }
   
   Cible getCible(int i){
@@ -215,5 +215,9 @@ class ArmeFeu {
   
   Mire getMire(){
     return this.m;
+  }
+  
+  Obstacle getObstacle(int i){
+    return obstacles.get(i);
   }
 }

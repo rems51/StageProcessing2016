@@ -10,34 +10,32 @@ ArmeFeu arme;
 
 PImage fond;
 
-Obstacle poteau1;
-Obstacle poteau2;
-Obstacle poteau3;
-
-
 boolean kidmode = false;
 
 ConteneurCibles cibles = new ConteneurCibles();
+
+ConteneurObstacles obstacles = new ConteneurObstacles();
 
 ArrayList<ObjetGraphique> objGraphiques = new ArrayList<ObjetGraphique>();
 
 void setup(){
   size(800,600);
   arme = new ArmeFeu(100,30);
+  arme.setObstacles(obstacles);
   arme.setCibles(cibles);
   fond = loadImage("fond_stand_tir.jpg");
-  poteau1 = new Obstacle("fond_stand_tir_1.png",0,0);
-  poteau2 = new Obstacle("fond_stand_tir_2.png",0,0);
-  poteau3 = new Obstacle("fond_stand_tir_3.png",0,0);
+  obstacles.ajoutObstacle("fond_stand_tir_3.png",0,0,15);
+  obstacles.ajoutObstacle("fond_stand_tir_2.png",0,0,9);
+  obstacles.ajoutObstacle("fond_stand_tir_1.png",0,0,3);
   cibles.ajoutCible(0,height/2,15,1);
   cibles.ajoutCible(width/4,height/2+25,9,2);
   cibles.ajoutCible(width/2,height/2+70,3,3);
   objGraphiques.add(arme.getMire());
-  objGraphiques.add(poteau1);
+  objGraphiques.add(arme.getObstacle(2));
   objGraphiques.add(arme.getCible(2));
-  objGraphiques.add(poteau2);
+  objGraphiques.add(arme.getObstacle(1));
   objGraphiques.add(arme.getCible(1));
-  objGraphiques.add(poteau3);
+  objGraphiques.add(arme.getObstacle(0));
   objGraphiques.add(arme.getCible(0));
 }
 

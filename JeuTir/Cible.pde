@@ -57,10 +57,10 @@ class Cible extends ObjetGraphique{
     
     //if(x > this.position.x - imgW/2 && x < this.position.x + imgW/2 && y > this.position.y - imgH/2 && y < this.position.y + imgH/2){
     if(d > imgW/2 * imgH/2){
-      println("pas Touché !");
+      //println("cible pas Touché !");
       return false;
     }else{
-      println("Touché !");
+      //println("cible Touché !");
       return true;
     }
   }
