@@ -5,6 +5,8 @@ class Animation {
   int frame;
   private String type;
   int timeBetweenFrameMS = 100;
+  int x = 0;
+  int y = 0;
   //variables
   int msAnimation = 0;
   
@@ -20,8 +22,20 @@ class Animation {
     }
   }
 
-  void display(float xpos, float ypos) {
-    image(images[frame], xpos, ypos);
+  void display() {
+    pushMatrix();
+    image(images[frame], this.x, this.y);
+    popMatrix();
+  }
+  
+  void updatePos(int x, int y){
+    this.x = x;
+    this.y = y;
+  }
+  
+  void update(float vitesseX, float vitesseY){
+    this.x += vitesseX;
+    this.y += vitesseY;
   }
   
   void updateFrame(long delta){
@@ -35,6 +49,8 @@ class Animation {
   void updateTimeBetweenFrame(int time){ 
     this.timeBetweenFrameMS = time;
   }
+  
+  
   
   int getWidth() {
     return images[0].width;
