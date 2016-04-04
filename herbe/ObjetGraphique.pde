@@ -15,7 +15,7 @@ float y;
     this.y = y;
   }
   
-  void update(float taille){
+  void resize(float taille){
     this.taille = taille;
     img.resize((int)(img.width*taille),(int)(img.height*taille));
   }

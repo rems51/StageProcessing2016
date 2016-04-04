@@ -14,7 +14,7 @@ class Clouds {
     this.nuages = new ArrayList<ObjetGraphique>();
     for(int k = 0; k < nbNuage ; k++){
       nuages.add(new ObjetGraphique("nuage.png"));
-      nuages.get(k).update(random(0.05,0.30));
+      nuages.get(k).resize(random(0.05,0.30));
       nuages.get(k).update(x+(int)random(0,CWidth),y+(int)random(0,CHeight/3));
     }
   }

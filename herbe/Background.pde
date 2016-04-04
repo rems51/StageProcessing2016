@@ -30,8 +30,8 @@ class Background{
   }
   
   void resize(float taille){
-    this.background1.update(taille);
-    this.background2.update(taille);
+    this.background1.resize(taille);
+    this.background2.resize(taille);
     if(this.x1 < this.x2){
       if(isVertical){
         this.y2 = y1 +this.background1.getHeight();
