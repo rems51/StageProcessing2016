@@ -16,8 +16,8 @@ class ConteneurImpacts {
     }
   }
   
-  boolean ajoutImpact(float x, float y,int z){
-    impacts.add(new Impact(z));
+  boolean ajoutImpact(float x, float y,int z,PImage img){
+    impacts.add(new Impact(z,img));
     impacts.get(impacts.size()-1).position.x = x;
     impacts.get(impacts.size()-1).position.y = y;
     return true;

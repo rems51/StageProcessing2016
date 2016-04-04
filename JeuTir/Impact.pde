@@ -9,12 +9,12 @@ class Impact extends ObjetGraphique{
   
   int diametreImpact = 30;
   
-  Impact (int z) {
+  Impact (int z,PImage img) {
     super();
     diametreImpact = diametreImpact / z ;
     imgW = imgW / z;
     imgH = imgW;
-    impact = loadImage("fleur.png");
+    impact = img.copy();
     impact.resize(imgW,imgH);
   }
   
@@ -26,12 +26,12 @@ class Impact extends ObjetGraphique{
     
     pushMatrix();
     translate (position.x, position.y);
-    if(!kidImpact){
+    if(kidImpact){
+      image(impact,-imgW/2,-imgH/2);
+    }else{
       fill(0);
       stroke(150);
       ellipse (0, 0, diametreImpact, diametreImpact);
-    }else if(kidImpact){
-      image(impact,-imgW/2,-imgH/2);
     }
     popMatrix();
   }

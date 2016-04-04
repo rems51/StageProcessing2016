@@ -40,7 +40,7 @@ class ArmeFeu {
   
   ConteneurObstacles obstacles;
   
-  ConteneurCibles cibles;
+  PImage imageImpactKid;
   
   ArmeFeu (int interval,int nbBalle) {
     generator = new Random();
@@ -69,24 +69,18 @@ class ArmeFeu {
   
   void update(long delta) {
     
-    cibles.update();
     
     tiract += delta;
     if(tiract >= tirinterval && nbBalleChargeur > 0){
       tiract = 0;
       if(tirmode){
-        int i = cibles.oneIsTouched(m.position.x,m.position.y);
         int j = obstacles.oneIsTouched(m.position.x,m.position.y);
-        if(i != -1){
-          cibles.ajoutImpact(i,m.position.x,m.position.y);
-          nbBalleChargeur -= 1;
-          firstShoot = false;
-        }else if(j != -1){
-          obstacles.ajoutImpact(j,m.position.x,m.position.y);
+        if(j != -1){
+          obstacles.ajoutImpact(j,m.position.x,m.position.y,imageImpactKid);
           nbBalleChargeur -= 1;
           firstShoot = false;
         }else{
-          if(impacts.ajoutImpact(m.position.x,m.position.y,1)){
+          if(impacts.ajoutImpact(m.position.x,m.position.y,1,imageImpactKid)){
             nbBalleChargeur -= 1;
             firstShoot = false;
           }
@@ -192,26 +186,20 @@ class ArmeFeu {
   
   void cleanAllImpact(){
     impacts.cleanAllImpact();
-    cibles.cleanAllImpact();
+    obstacles.cleanAllImpact();
   }
   
   void setKidmode(boolean kidmode){
     kidarme = kidmode;
     impacts.setKidmode(kidmode);
-    cibles.setKidmode(kidmode);
+    obstacles.setKidmode(kidmode);
   }
-  
-  void setCibles(ConteneurCibles lesCibles){
-    cibles = lesCibles;
-  }
+
   
   void setObstacles(ConteneurObstacles lesObstacles){
     obstacles = lesObstacles;
   }
-  
-  Cible getCible(int i){
-    return cibles.get(i);
-  }
+
   
   Mire getMire(){
     return this.m;
@@ -219,5 +207,9 @@ class ArmeFeu {
   
   Obstacle getObstacle(int i){
     return obstacles.get(i);
+  }
+  
+  void setImageImpactKid(PImage img){
+    imageImpactKid = img;
   }
 }

@@ -1,20 +1,59 @@
 class Obstacle extends ObjetGraphique{
 
   PImage obstacle ;
+  PImage obstacleKid;
   
   ConteneurImpacts impacts = new ConteneurImpacts();
   
-  int tailleImpact ;
+  int tailleImpact;
+
+  int imgW;
+  int imgH;
   
-  Obstacle (String img, float x, float y,int tailleImpacts) {
-    obstacle = loadImage(img);
-    this.position.x = x;
-    this.position.y = y;
+  int vitesseX = 0;
+  int vitesseY = 0;
+  
+  boolean kidObstacle = false;
+  
+  Obstacle (PImage img, int x, int y, int widthImg, int heightImg,int tailleImpacts, int vitesseObstacleX, int vitesseObstacleY) {
+    super(x,y);
+    obstacle = img.copy();
+    obstacleKid = img.copy();
+    imgW = widthImg;
+    imgH = heightImg;
+    obstacle.resize(imgW,imgH);
+    obstacleKid.resize(imgW,imgH);
+    vitesseX = vitesseObstacleX; 
+    vitesseY = vitesseObstacleY; 
+    tailleImpact = tailleImpacts;
+  }
+  
+  Obstacle (PImage img, int x, int y, int widthImg, int heightImg,int tailleImpacts, int vitesseObstacleX, int vitesseObstacleY, PImage imgKid) {
+    super(x,y);
+    obstacle = img.copy();
+    obstacleKid = imgKid.copy();
+    imgW = widthImg;
+    imgH = heightImg;
+    obstacle.resize(imgW,imgH);
+    obstacleKid.resize(imgW,imgH);
+    vitesseX = vitesseObstacleX; 
+    vitesseY = vitesseObstacleY; 
     tailleImpact = tailleImpacts;
   }
   
   void update() {
-
+    if(this.position.x - imgW/2 >= width ){
+      this.position.x = - imgW/2;
+    }else if( this.position.x + imgW/2 < 0 ){
+      this.position.x = width + imgW/2 ;
+    }
+    if(this.position.y - imgH/2 >= height ){
+      this.position.y =  - imgH/2;
+    }else if(this.position.y + imgH/2 < 0 ){
+      this.position.y = height + imgH/2;
+    }
+    this.position.x += vitesseX;
+    this.position.y += vitesseY;
   }
   
   void display() {
@@ -22,7 +61,11 @@ class Obstacle extends ObjetGraphique{
     pushMatrix();
     translate (position.x, position.y);
     
-    image(obstacle,0,0);
+    if(kidObstacle){
+      image(obstacleKid,-imgW/2,-imgH/2);
+    }else{
+      image(obstacle,-imgW/2,-imgH/2); 
+    }
     
     impacts.display();
     
@@ -31,34 +74,40 @@ class Obstacle extends ObjetGraphique{
   
   boolean isTouched(float x,float y){
     
-    float calcul = x + y*obstacle.width;
-    
-    int position = int(calcul);
-    
+    boolean res = false;
     float alpha;
+    float targetX;
+    float targetY;
+    int position;
     
-    if(x > width || y > height || calcul < 0){
-      alpha = -1;
-    }else{
+    if(x >= ( this.position.x - ( imgW/2 ) ) && x <= ( this.position.x + ( imgW/2 ) ) && y >= ( this.position.y - ( imgH/2 ) ) && y <= ( this.position.y + ( imgH/2 ) )){
+      targetX = x - ( this.position.x - ( imgW/2 ) );
+      targetY = y - ( this.position.y - ( imgH/2 ) );
+      position = int (targetY * imgW + targetX);
       alpha = alpha(obstacle.pixels[position]);
+      if(alpha != 255){
+        res = false;
+      }else{
+        res = true;
+      }
     }
     
-    if(alpha == 0){
-      println("Obstacle pas Touché !");
-      return false;
-    }else{
-      println("Obstacle Touché !");
-      return true;
-    }
+    return res;
+    
   }
   
-  void ajoutImpact(float x,float y){
-    impacts.ajoutImpact(x - this.position.x, y - this.position.y,tailleImpact);
-    //impacts.setKidmode(kidCible);
+  void ajoutImpact(float x,float y,PImage img){
+    impacts.ajoutImpact(x - this.position.x, y - this.position.y,tailleImpact,img);
+    impacts.setKidmode(kidObstacle);
   }
   
   void cleanAllImpact(){
     impacts.cleanAllImpact();
+  }
+  
+  void setKidmode(boolean kidmode){
+    kidObstacle = kidmode;
+    impacts.setKidmode(kidmode);
   }
   
 }

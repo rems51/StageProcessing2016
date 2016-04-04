@@ -9,10 +9,15 @@ boolean mouseisclicked = false;
 ArmeFeu arme;
 
 PImage fond;
+PImage fondKid;
+PImage cible_mouvante;
+PImage cible_kid;
+PImage fond_stand_tir_1;
+PImage fond_stand_tir_2;
+PImage fond_stand_tir_3;
+PImage impactKid;
 
 boolean kidmode = false;
-
-ConteneurCibles cibles = new ConteneurCibles();
 
 ConteneurObstacles obstacles = new ConteneurObstacles();
 
@@ -22,21 +27,28 @@ void setup(){
   size(800,600);
   arme = new ArmeFeu(100,30);
   arme.setObstacles(obstacles);
-  arme.setCibles(cibles);
   fond = loadImage("fond_stand_tir.jpg");
-  obstacles.ajoutObstacle("fond_stand_tir_3.png",0,0,15);
-  obstacles.ajoutObstacle("fond_stand_tir_2.png",0,0,9);
-  obstacles.ajoutObstacle("fond_stand_tir_1.png",0,0,3);
-  cibles.ajoutCible(0,height/2,15,1);
-  cibles.ajoutCible(width/4,height/2+25,9,2);
-  cibles.ajoutCible(width/2,height/2+70,3,3);
+  fondKid = loadImage("plage.JPG");
+  cible_mouvante = loadImage("cible_mouvante.png");
+  cible_kid = loadImage("cible_kid.png");
+  fond_stand_tir_1 = loadImage("fond_stand_tir_1.png");
+  fond_stand_tir_2 = loadImage("fond_stand_tir_2.png");
+  fond_stand_tir_3 = loadImage("fond_stand_tir_3.png");
+  impactKid = loadImage("fleur.png");
+  arme.setImageImpactKid(impactKid);
+  obstacles.ajoutObstacle(cible_mouvante, 0,height/2, height/15, height/15, 15, 1, 0,cible_kid); 
+  obstacles.ajoutObstacle(fond_stand_tir_3,width/2,height/2,800,600,15,0,0);
+  obstacles.ajoutObstacle(cible_mouvante, width/4,height/2+25, height/9, height/9, 9, 2, 0,cible_kid); 
+  obstacles.ajoutObstacle(fond_stand_tir_2,width/2,height/2,800,600,9,0,0);
+  obstacles.ajoutObstacle(cible_mouvante, width/2,height/2+70, height/3, height/3, 3, 3, 0,cible_kid);
+  obstacles.ajoutObstacle(fond_stand_tir_1,width/2,height/2,800,600,3,0,0);
   objGraphiques.add(arme.getMire());
+  objGraphiques.add(arme.getObstacle(5));
+  objGraphiques.add(arme.getObstacle(4));
+  objGraphiques.add(arme.getObstacle(3));
   objGraphiques.add(arme.getObstacle(2));
-  objGraphiques.add(arme.getCible(2));
   objGraphiques.add(arme.getObstacle(1));
-  objGraphiques.add(arme.getCible(1));
   objGraphiques.add(arme.getObstacle(0));
-  objGraphiques.add(arme.getCible(0));
 }
 
 void draw(){
@@ -53,10 +65,15 @@ void update(long delta){
     mouseisclicked = false;
   }
   arme.update(delta);
+  this.updateObjetGraphique();
 }
 
 void display(){
-  image(fond,0,0);
+  if(kidmode){
+    image(fondKid,0,0);
+  }else{
+    image(fond,0,0);
+  }
     
   this.displayObjetGraphique();
   
@@ -100,11 +117,9 @@ void keyPressed(){
 void setKidmode(){
   if(!kidmode){
     kidmode = true;  
-    fond = loadImage("gazon.jpeg");
     arme.setKidmode(kidmode);
   }else if(kidmode){
     kidmode = false;
-    fond = loadImage("fond_stand_tir.jpg");
     arme.setKidmode(kidmode);
   }
 }
@@ -112,5 +127,11 @@ void setKidmode(){
 void displayObjetGraphique(){
   for (int i = objGraphiques.size()-1; i >= 0; i--)  {
       objGraphiques.get(i).display();
+    }
+}
+
+void updateObjetGraphique(){
+  for (int i = objGraphiques.size()-1; i >= 0; i--)  {
+      objGraphiques.get(i).update();
     }
 }

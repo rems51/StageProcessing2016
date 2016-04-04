@@ -22,8 +22,12 @@ class ConteneurObstacles {
     obstacles.get(i).display();
   }
   
-  void ajoutObstacle(String img, float x, float y, int tailleImpact){
-    obstacles.add(new Obstacle(img,x,y,tailleImpact)); 
+  void ajoutObstacle(PImage img, int x, int y, int widthImg, int heightImg,int tailleImpacts, int vitesseObstacleX, int vitesseObstacleY){
+    obstacles.add(new Obstacle(img,x,y,widthImg,heightImg,tailleImpacts,vitesseObstacleX,vitesseObstacleY));
+  }
+  
+  void ajoutObstacle(PImage img, int x, int y, int widthImg, int heightImg,int tailleImpacts, int vitesseObstacleX, int vitesseObstacleY, PImage imgKid){
+    obstacles.add(new Obstacle(img,x,y,widthImg,heightImg,tailleImpacts,vitesseObstacleX,vitesseObstacleY,imgKid));
   }
   
   int oneIsTouched(float x, float y){
@@ -38,22 +42,12 @@ class ConteneurObstacles {
     return res;
   }
   
-  //void ajoutImpact(int i, float posX, float posY){
-  //  obstacles.get(i).ajoutImpact(posX,posY);
-  //}
-  
-  //void cleanAllImpact(){
-  //  for (int i = 0; i < obstacles.size(); i++)  {
-  //    cibles.get(i).cleanAllImpact();
-  //  }
-  //}
-  
   Obstacle get(int i){
     return obstacles.get(i);
   }
   
-  void ajoutImpact(int i, float posX, float posY){
-    obstacles.get(i).ajoutImpact(posX,posY);
+  void ajoutImpact(int i, float posX, float posY,PImage img){
+    obstacles.get(i).ajoutImpact(posX,posY,img);
   }
   
   void cleanAllImpact(){
@@ -62,6 +56,10 @@ class ConteneurObstacles {
     }
   }
   
-  
+  void setKidmode(boolean kidmode){
+    for (int i = 0; i < obstacles.size(); i++)  {
+      obstacles.get(i).setKidmode(kidmode);
+    }
+  }
   
 }
