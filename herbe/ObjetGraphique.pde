@@ -10,7 +10,7 @@ float y;
     img.resize((int)(img.width*taille),(int)(img.height*taille));
   }
   
-  void update(int x, int y){
+  void update(float x, float y){
     this.x = x;
     this.y = y;
   }
@@ -20,9 +20,26 @@ float y;
     img.resize((int)(img.width*taille),(int)(img.height*taille));
   }
   
+  void resize(float Iwidth, float Iheight){
+    img.resize((int)(Iwidth),(int)(Iheight));
+  }
+  
+  
   void display(){
     pushMatrix();
     image(img, x, y);
+    popMatrix(); 
+  }
+  
+  void display(float posx, float posy){
+    pushMatrix();
+    image(img, posx, posy);
+    popMatrix(); 
+  }
+  
+  void display(float posx, float posy, float Iwidth, float Iheight){
+    pushMatrix();
+    image(img, posx, posy,Iwidth,Iheight);
     popMatrix(); 
   }
   

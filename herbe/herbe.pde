@@ -18,7 +18,7 @@ void setup(){
   animation1 = new Animation("sprite_","png", 6);
   animation1.updatePos(width/2-animation1.getWidth()/2,height-animation1.getHeigth());
   b = new Background("background0000.png",false,0,-100,width,height);
-  hills = new Background("peaks.png",false,0,-400,width,height);
+  hills = new Background("peaks.png",false,0,-450,width,height);
   b.resize(0.70);
 }
 
@@ -34,8 +34,8 @@ void draw(){
 void update(long delta){
   anim += delta;
   animation1.updateFrame(delta);
-  b.update(-1);
-  hills.update(-0.75);
+  b.update(-2);
+  hills.update(-1);
 }
 
 void display(){
