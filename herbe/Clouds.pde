@@ -12,7 +12,7 @@ class Clouds {
   
   Clouds(int CWidth, int CHeight, int nbNuage,int x, int y){
     this.CWidth = (float)CWidth;
-    nuage = new ObjetGraphique("nuage.png");
+    nuage = new ObjetGraphique("nuageV.png");
     this.CHeight = (float)CHeight ;
     this.x = x;
     this.y = y;
@@ -23,7 +23,6 @@ class Clouds {
       posx.add(x+(float)((int)random(0,CWidth)));
       posy.add(y+(float)((int)random(0,CHeight/3)));
       taille.add(random(0.05,0.30));
-      println(taille.get(k));
     }
   }
   
@@ -33,7 +32,10 @@ class Clouds {
       posy.set(k, posy.get(k) + vitesseY * ((k+1)*(1/ (float)(posx.size()))));
       if(posx.get(k) < - taille.get(k) * nuage.getWidth() ){
         posx.set(k , CWidth) ;
-      }//taille.get(k)
+      }
+      if(posx.get(k) > CWidth + taille.get(k) * nuage.getWidth() ){
+        posx.set(k , -taille.get(k) * nuage.getWidth()) ;
+      }
       nuage.display(posx.get(k), posy.get(k),nuage.getWidth()*taille.get(k),taille.get(k)*nuage.getHeight());
     }
   }

@@ -28,6 +28,7 @@ class Grass {
       grass.get(j).ancre.y += vitesseY ;
       
       if(grass.get(j).ancre.x < -50){grass.get(j).ancre.x += GWidth +100;}
+      if(grass.get(j).ancre.x > GWidth+50){grass.get(j).ancre.x -= GWidth +100;}
       grass.get(j).updateDetailLevel(2);
       grass.get(j).display(x);
     }

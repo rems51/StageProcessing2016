@@ -2,24 +2,23 @@ long currentTime;
 long previousTime = 0;
 long delta = 0;
 float tx = 0;
-Grass grass;
-Clouds nuages;
-int anim = 0;
+
 Animation animation1 ;
-ObjetGraphique background ;
-Background b ;
-Background hills;
+
+Decor decor;
+Player player;
+
+float vitesse = 1;
 
 void setup(){
   size(800,300);
-  grass =new Grass(width,height,0,0);
-  this.nuages = new Clouds(width,height,50,0,0);
+  
+  decor = new Decor(0,0,width,height);
+  player = new Player(width/2,height);
+  player.setLimits(0,width);
   frameRate(24);
-  animation1 = new Animation("sprite_","png", 6);
-  animation1.updatePos(width/2-animation1.getWidth()/2,height-animation1.getHeigth());
-  b = new Background("background0000.png",false,0,-100,width,height);
-  hills = new Background("peaks.png",false,0,-450,width,height);
-  b.resize(0.70);
+
+
 }
 
 
@@ -32,17 +31,30 @@ void draw(){
 }
 
 void update(long delta){
-  anim += delta;
-  animation1.updateFrame(delta);
-  b.update(-2);
-  hills.update(-1);
+  player.updateFrame(delta); 
+  player.update(this.vitesse,0);
+  decor.update(-this.vitesse);
 }
 
 void display(){
   background(51, 173, 255);
-  nuages.display(-0.5,0); 
-  hills.display();
-  b.display();
-  animation1.display(); 
-  grass.display(-3,0);
+  
+  decor.displayBack();
+  
+  player.display(); 
+  
+  decor.displayFront();
+  println(vitesse);
+
+}
+
+
+void keyPressed(){
+  if(key == 'a'){
+    this.vitesse = -3;
+  }else if(key == 'd'){
+    this.vitesse = 3;
+  }else if(key == 's' ){
+    this.vitesse =0;
+  }
 }

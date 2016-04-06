@@ -27,7 +27,8 @@ float y;
   
   void display(){
     pushMatrix();
-    image(img, x, y);
+    translate(x, y);
+    image(img, 0, 0);
     popMatrix(); 
   }
   

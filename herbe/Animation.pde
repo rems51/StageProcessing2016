@@ -7,6 +7,7 @@ class Animation {
   int timeBetweenFrameMS = 100;
   int x = 0;
   int y = 0;
+  boolean isFlip = false;
   //variables
   int msAnimation = 0;
   
@@ -24,13 +25,26 @@ class Animation {
 
   void display() {
     pushMatrix();
-    image(images[frame], this.x, this.y);
+    if(this.isFlip){
+      translate(this.x + images[frame].width, this.y);
+      scale(-1, 1);
+    }else{
+      translate(this.x , this.y);
+    }
+    
+    image(images[frame], 0 , 0);
+     
     popMatrix();
+   
   }
   
   void updatePos(int x, int y){
     this.x = x;
     this.y = y;
+  }
+  
+  void updateDir(boolean isFlip){
+    this.isFlip = isFlip;
   }
   
   void update(float vitesseX, float vitesseY){
@@ -40,13 +54,14 @@ class Animation {
   
   void updateFrame(long delta){
     msAnimation += delta;
-    if(anim > timeBetweenFrameMS){
+    if(msAnimation > timeBetweenFrameMS){
       frame = (frame+1) % imageCount;
-      anim = 0;
+      msAnimation = 0;
     }
   }
   
   void updateTimeBetweenFrame(int time){ 
+    println();
     this.timeBetweenFrameMS = time;
   }
   
