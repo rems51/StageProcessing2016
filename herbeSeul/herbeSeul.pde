@@ -32,7 +32,7 @@ void update(long delta){
 
 void display(){
   background(51, 173, 255); 
-  grass.display(this.vitesse*3,0);
+  grass.display(this.vitesse,0);
   println("vitesse : "+ vitesse);
 
 }
